@@ -32,7 +32,15 @@ function AppText({ children, style, fontWeight, numberOfLines }) {
   if (!fontLoaded) return <Text>...</Text>; //Loading
 
   return (
-    <Text style={{ ...style, fontFamily }} numberOfLines={numberOfLines}>
+    <Text
+      style={{
+        color: "#181818",
+        ...style,
+        fontFamily,
+        includeFontPadding: false,
+      }}
+      numberOfLines={numberOfLines}
+    >
       {children}
     </Text>
   );

@@ -1,10 +1,11 @@
 import AppText from "../AppText/AppText";
 import { TouchableOpacity } from "react-native";
 
-function Button({ children, style, color, fontSize }) {
+function Button({ children, style, color, fontSize, onPress }) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
+      onPress={onPress}
       style={{
         ...style,
         height: 30,
@@ -16,7 +17,6 @@ function Button({ children, style, color, fontSize }) {
         style={{
           color,
           fontSize,
-          includeFontPadding: false,
         }}
         fontWeight="600"
       >

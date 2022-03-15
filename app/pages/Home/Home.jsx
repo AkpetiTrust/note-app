@@ -9,7 +9,7 @@ import HomeNote from "./components/HomeNote";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import Logo from "../../components/Logo/Logo";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [notes, setNotes] = useState([
     {
       title: "GSTs man 😥",
@@ -45,7 +45,14 @@ export default function Home() {
         <AppText>
           This is your safe space. You can tell your notes anything.
         </AppText>
-        <Button style={styles.button} fontSize={12} color="#fff">
+        <Button
+          style={styles.button}
+          fontSize={12}
+          color="#fff"
+          onPress={() => {
+            navigation.navigate("AllNotes");
+          }}
+        >
           GO TO NOTES
         </Button>
         <Search />

@@ -8,7 +8,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 
-function Search() {
+function Search({ style }) {
   let [fontLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -20,7 +20,7 @@ function Search() {
   if (!fontLoaded) return <Text>...</Text>; //Loading
 
   return (
-    <View style={{ position: "relative" }}>
+    <View style={{ position: "relative", ...style }}>
       <TextInput
         placeholder="Search"
         placeholderTextColor={"rgba(0, 0, 0, 0.6)"}
@@ -41,6 +41,7 @@ function Search() {
           backgroundColor: "#F1F1F1",
           paddingLeft: 30,
           fontFamily,
+          includeFontPadding: false,
         }}
       />
       <Icon
