@@ -4,8 +4,11 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: StatusBar.currentHeight + 20,
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
     flex: 1,
+  },
+
+  scrollview: {
+    paddingHorizontal: 20,
   },
 
   header: {

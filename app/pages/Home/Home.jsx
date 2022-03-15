@@ -7,6 +7,7 @@ import Search from "../../components/Search/Search";
 import Illustration from "./assets/Illustration";
 import HomeNote from "./components/HomeNote";
 import PlusButton from "../../components/PlusButton/PlusButton";
+import AddNote from "../../components/AddNote/AddNote";
 import Logo from "../../components/Logo/Logo";
 
 export default function Home({ navigation }) {
@@ -34,6 +35,8 @@ export default function Home({ navigation }) {
       },
     },
   ]);
+
+  const [addNotesActive, setAddNotesActive] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -68,7 +71,12 @@ export default function Home({ navigation }) {
           </View>
         </View>
       </ScrollView>
-      <PlusButton />
+      <PlusButton
+        onPress={() => {
+          setAddNotesActive(true);
+        }}
+      />
+      <AddNote active={addNotesActive} setActive={setAddNotesActive} />
     </View>
   );
 }

@@ -17,7 +17,7 @@ function Search({ style }) {
   const [fontFamily, setFontFamily] = useState("Poppins_600SemiBold");
   const [value, setValue] = useState("");
 
-  if (!fontLoaded) return <Text>...</Text>; //Loading
+  if (!fontLoaded) return <Text></Text>; //Loading
 
   return (
     <View style={{ position: "relative", ...style }}>

@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { TextInput, Text } from "react-native";
 import {
   useFonts,
   Poppins_400Regular,
@@ -8,7 +8,7 @@ import {
   Poppins_800ExtraBold,
 } from "@expo-google-fonts/poppins";
 
-function AppText({ children, style, fontWeight, numberOfLines }) {
+function AppInput(props) {
   let [fontLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -17,6 +17,7 @@ function AppText({ children, style, fontWeight, numberOfLines }) {
     Poppins_800ExtraBold,
   });
 
+  const fontWeight = props.fontWeight;
   let fontFamily;
 
   if (fontWeight === "700") {
@@ -29,21 +30,13 @@ function AppText({ children, style, fontWeight, numberOfLines }) {
     fontFamily = "Poppins_400Regular";
   }
 
+  let style = { ...props.style, fontFamily };
+
+  let finalProps = { ...props, style };
+
   if (!fontLoaded) return <Text></Text>; //Loading
 
-  return (
-    <Text
-      style={{
-        color: "#181818",
-        ...style,
-        fontFamily,
-        includeFontPadding: false,
-      }}
-      numberOfLines={numberOfLines}
-    >
-      {children}
-    </Text>
-  );
+  return <TextInput {...finalProps} />;
 }
 
-export default AppText;
+export default AppInput;

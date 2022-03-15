@@ -1,7 +1,7 @@
 import { TouchableOpacity, Platform } from "react-native";
 import Icon from "./Icon";
 
-function PlusButton() {
+function PlusButton({ onPress }) {
   let boxShadow;
   if (Platform.OS === "ios") {
     boxShadow = {
@@ -18,15 +18,16 @@ function PlusButton() {
   }
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.6}
+      onPress={onPress}
       style={{
         ...boxShadow,
         position: "absolute",
         bottom: 40,
         right: 20,
-        width: 35,
-        height: 35,
-        borderRadius: 17.5,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#33CA7F",

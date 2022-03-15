@@ -4,6 +4,7 @@ import Search from "../../components/Search/Search";
 import BackButton from "../../components/BackButton/BackButton";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import MonthSection from "./components/MonthSection/MonthSection";
+import AddNote from "../../components/AddNote/AddNote";
 import styles from "./styles";
 import { useState } from "react";
 
@@ -66,10 +67,11 @@ function AllNotes({ navigation }) {
   ]);
 
   const [notesInfo, setNotesInfo] = useState({ number: 4 });
+  const [addNotesActive, setAddNotesActive] = useState(false);
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollview}>
         <View style={styles.header}>
           <BackButton navigation={navigation} style={styles.back_button} />
           <AppText fontWeight={"700"} style={styles.title}>
@@ -85,7 +87,12 @@ function AllNotes({ navigation }) {
           YOU HAVE {notesInfo.number} NOTES
         </AppText>
       </ScrollView>
-      <PlusButton />
+      <PlusButton
+        onPress={() => {
+          setAddNotesActive(true);
+        }}
+      />
+      <AddNote active={addNotesActive} setActive={setAddNotesActive} />
     </View>
   );
 }
