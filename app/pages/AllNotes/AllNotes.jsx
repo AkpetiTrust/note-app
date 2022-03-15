@@ -65,6 +65,8 @@ function AllNotes({ navigation }) {
     },
   ]);
 
+  const [notesInfo, setNotesInfo] = useState({ number: 4 });
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -74,10 +76,14 @@ function AllNotes({ navigation }) {
             ALL NOTES
           </AppText>
         </View>
-        <Search style={{ width: "80%", marginBottom: 20 }} />
+        <Search style={styles.search} />
         {months.map((month) => (
           <MonthSection month={month} key={month.month} />
         ))}
+
+        <AppText style={styles.info} fontWeight={"600"}>
+          YOU HAVE {notesInfo.number} NOTES
+        </AppText>
       </ScrollView>
       <PlusButton />
     </View>

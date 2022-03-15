@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 4,
   },
+  search: { width: "80%", marginBottom: 20 },
+  info: {
+    fontSize: 15,
+    color: "background: rgba(24, 24, 24, 0.65)",
+    textAlign: "center",
+  },
 });
 
 export default styles;
