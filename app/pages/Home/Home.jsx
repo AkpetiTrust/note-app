@@ -8,6 +8,7 @@ import Illustration from "./assets/Illustration";
 import HomeNote from "./components/HomeNote";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import AddNote from "../../components/AddNote/AddNote";
+import Menu from "../../components/Menu/Menu";
 import Logo from "../../components/Logo/Logo";
 
 export default function Home({ navigation }) {
@@ -77,6 +78,7 @@ export default function Home({ navigation }) {
         }}
       />
       <AddNote active={addNotesActive} setActive={setAddNotesActive} />
+      <Menu navigation={navigation} />
     </View>
   );
 }

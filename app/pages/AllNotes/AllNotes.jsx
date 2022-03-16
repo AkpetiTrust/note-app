@@ -5,6 +5,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import MonthSection from "./components/MonthSection/MonthSection";
 import AddNote from "../../components/AddNote/AddNote";
+import Menu from "../../components/Menu/Menu";
 import styles from "./styles";
 import { useState } from "react";
 
@@ -93,6 +94,7 @@ function AllNotes({ navigation }) {
         }}
       />
       <AddNote active={addNotesActive} setActive={setAddNotesActive} />
+      <Menu navigation={navigation} />
     </View>
   );
 }

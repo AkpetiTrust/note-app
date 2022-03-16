@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { View, TouchableOpacity, Animated } from "react-native";
+import { View, TouchableOpacity, Animated, Keyboard } from "react-native";
 import AppText from "../AppText/AppText";
 import AppInput from "../AppInput/AppInput";
 import styles from "./styles";
@@ -35,6 +35,7 @@ function AddNote({ active, setActive }) {
           activeOpacity={0.7}
           onPress={() => {
             setActive(false);
+            Keyboard.dismiss();
           }}
         >
           <AppText fontWeight={"700"}>CANCEL</AppText>
@@ -45,12 +46,11 @@ function AddNote({ active, setActive }) {
           </AppText>
         </TouchableOpacity>
       </View>
-      <AppInput style={styles.input} fontWeight="700" defaultValue="Title" />
+      <AppInput style={styles.input} fontWeight="500" defaultValue="Title" />
       <AppInput
         multiline={true}
         style={styles.textarea}
         placeholder={"Write note..."}
-        fontWeight="700"
         placeholderTextColor="rgba(41, 45, 50, 0.51)"
       />
     </Animated.View>

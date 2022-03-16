@@ -10,27 +10,16 @@ import {
 
 function AppInput(props) {
   let [fontLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-    Poppins_800ExtraBold,
+    400: Poppins_400Regular,
+    500: Poppins_500Medium,
+    600: Poppins_600SemiBold,
+    700: Poppins_700Bold,
+    800: Poppins_800ExtraBold,
   });
 
-  const fontWeight = props.fontWeight;
-  let fontFamily;
+  let fontFamily = props.fontWeight;
 
-  if (fontWeight === "700") {
-    fontFamily = "Poppins_700Bold";
-  } else if (fontWeight === "600") {
-    fontFamily = "Poppins_600SemiBold";
-  } else if (fontWeight === "500") {
-    fontFamily = "Poppins_500Medium";
-  } else {
-    fontFamily = "Poppins_400Regular";
-  }
-
-  let style = { ...props.style, fontFamily };
+  let style = { ...props.style, fontFamily, fontWeight: "normal" };
 
   let finalProps = { ...props, style };
 

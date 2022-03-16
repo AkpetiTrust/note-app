@@ -10,24 +10,14 @@ import {
 
 function AppText({ children, style, fontWeight, numberOfLines }) {
   let [fontLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-    Poppins_800ExtraBold,
+    400: Poppins_400Regular,
+    500: Poppins_500Medium,
+    600: Poppins_600SemiBold,
+    700: Poppins_700Bold,
+    800: Poppins_800ExtraBold,
   });
 
-  let fontFamily;
-
-  if (fontWeight === "700") {
-    fontFamily = "Poppins_700Bold";
-  } else if (fontWeight === "600") {
-    fontFamily = "Poppins_600SemiBold";
-  } else if (fontWeight === "500") {
-    fontFamily = "Poppins_500Medium";
-  } else {
-    fontFamily = "Poppins_400Regular";
-  }
+  let fontFamily = fontWeight ? fontWeight : "400";
 
   if (!fontLoaded) return <Text></Text>; //Loading
 

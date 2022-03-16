@@ -42,6 +42,7 @@ function Search({ style }) {
           paddingLeft: 30,
           fontFamily,
           includeFontPadding: false,
+          fontWeight: "normal",
         }}
       />
       <Icon
