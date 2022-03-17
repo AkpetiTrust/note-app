@@ -38,7 +38,7 @@ function Menu({ navigation }) {
     },
     {
       navigation,
-      to: "Home",
+      to: "About",
       text: "ABOUT",
       icon: <About />,
     },
@@ -96,7 +96,11 @@ function Menu({ navigation }) {
             </View>
             <View style={styles.main}>
               {links.map((link) => (
-                <Link link={link} key={link.text} />
+                <Link
+                  link={link}
+                  key={link.text}
+                  setMenuActive={setMenuActive}
+                />
               ))}
             </View>
           </View>

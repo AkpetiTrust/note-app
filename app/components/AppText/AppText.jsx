@@ -8,7 +8,7 @@ import {
   Poppins_800ExtraBold,
 } from "@expo-google-fonts/poppins";
 
-function AppText({ children, style, fontWeight, numberOfLines }) {
+function AppText({ children, style, fontWeight, numberOfLines, ...props }) {
   let [fontLoaded] = useFonts({
     400: Poppins_400Regular,
     500: Poppins_500Medium,
@@ -30,6 +30,7 @@ function AppText({ children, style, fontWeight, numberOfLines }) {
         includeFontPadding: false,
       }}
       numberOfLines={numberOfLines}
+      {...props}
     >
       {children}
     </Text>
