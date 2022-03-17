@@ -5,6 +5,7 @@ import Illustration from "./assets/Illustration";
 import Menu from "../../components/Menu/Menu";
 import Link from "../../components/Link/Link";
 import { version } from "../../../package.json";
+import Footer from "./components/Footer";
 import styles from "./styles";
 
 function About({ navigation }) {
@@ -36,6 +37,7 @@ function About({ navigation }) {
             <AppText>{version}</AppText>
           </View>
         </View>
+        <Footer />
       </ScrollView>
       <Menu navigation={navigation} />
     </View>
