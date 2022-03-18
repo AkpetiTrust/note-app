@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from "react-native";
 import AppText from "../../../../components/AppText/AppText";
 
-function NotePreview({ noteProp }) {
+function NotePreview({ noteProp, navigation }) {
   const color = noteProp.color;
 
   return (
@@ -14,6 +14,9 @@ function NotePreview({ noteProp }) {
         borderBottomColor: "rgba(0,0,0,0.29)",
         borderBottomWidth: 1,
         marginBottom: 20,
+      }}
+      onPress={() => {
+        navigation.navigate("Note", { noteProp });
       }}
     >
       <View

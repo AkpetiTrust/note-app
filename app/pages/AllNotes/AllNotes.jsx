@@ -81,7 +81,11 @@ function AllNotes({ navigation }) {
         </View>
         <Search style={styles.search} />
         {months.map((month) => (
-          <MonthSection month={month} key={month.month} />
+          <MonthSection
+            month={month}
+            key={month.month}
+            navigation={navigation}
+          />
         ))}
 
         <AppText style={styles.info} fontWeight={"600"}>

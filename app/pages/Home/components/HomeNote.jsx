@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from "react-native";
 import AppText from "../../../components/AppText/AppText";
 
-function HomeNote({ noteProp }) {
+function HomeNote({ noteProp, navigation }) {
   let color = noteProp.color;
   return (
     <TouchableOpacity
@@ -12,6 +12,9 @@ function HomeNote({ noteProp }) {
         borderRadius: 10,
         paddingTop: 10,
         marginBottom: 30,
+      }}
+      onPress={() => {
+        navigation.navigate("Note", { noteProp });
       }}
     >
       <AppText fontWeight="600">{noteProp.title}</AppText>

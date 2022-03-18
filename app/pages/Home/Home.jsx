@@ -15,7 +15,7 @@ export default function Home({ navigation }) {
   const [notes, setNotes] = useState([
     {
       title: "GSTs man 😥",
-      text: "Omo these courses are really long, hope I finish them before so so so. I wonder when ASUU will call of strike so I can...",
+      text: "Omo these courses are really long, hope I finish them before so so so. I wonder when ASUU will call of strike so I can know what to do. Now I’m going to insert a long piece of text with random words. Peace studies, conflict resolution, Nigerian peoples and cultures. Differential equations, electromagnetism, random course, amines, amides, amino acids, basicity.",
       category: "Academics",
       date: "Apr, 26",
       color: {
@@ -67,7 +67,11 @@ export default function Home({ navigation }) {
           <AppText fontWeight="600">Recent</AppText>
           <View style={styles.notes_container}>
             {notes.map((note) => (
-              <HomeNote noteProp={note} key={note.text} />
+              <HomeNote
+                noteProp={note}
+                key={note.text}
+                navigation={navigation}
+              />
             ))}
           </View>
         </View>

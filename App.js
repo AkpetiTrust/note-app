@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./app/pages/Home/Home";
 import AllNotes from "./app/pages/AllNotes/AllNotes";
 import About from "./app/pages/About/About";
+import Note from "./app/pages/Note/Note";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,11 @@ export default function App() {
           name="About"
           component={About}
           options={{ title: "About" }}
+        />
+        <Stack.Screen
+          name="Note"
+          component={Note}
+          options={{ title: "Note" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
