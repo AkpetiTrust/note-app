@@ -1,11 +1,16 @@
 import { useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity, Animated, Keyboard } from "react-native";
-import AppText from "../AppText/AppText";
-import AppInput from "../AppInput/AppInput";
-import Select from "../Select/Select";
+import { View, TouchableOpacity, Keyboard } from "react-native";
+import AppText from "../../components/AppText/AppText";
+import AppInput from "../../components/AppInput/AppInput";
+import Select from "../../components/Select/Select";
 import styles from "./styles";
 
-function AddNote({ active, setActive }) {
+function AddNote({
+  route: {
+    params: { noteProp },
+  },
+  navigation,
+}) {
   const [categories, setCategories] = useState([
     {
       name: "Personal",
@@ -33,37 +38,19 @@ function AddNote({ active, setActive }) {
     },
   ]);
 
-  const translateAnim = useRef(new Animated.Value(1000)).current;
   let containerStyles;
-  if (active) {
-    Animated.timing(translateAnim, {
-      toValue: 0,
-      duration: 300,
-      delay: 0,
-      useNativeDriver: true,
-    }).start();
-  } else {
-    Animated.timing(translateAnim, {
-      toValue: 1000,
-      duration: 300,
-      delay: 0,
-      useNativeDriver: true,
-    }).start();
-  }
 
   containerStyles = {
     ...styles.container,
-    transform: [{ translateY: translateAnim }],
   };
 
   return (
-    <Animated.View style={containerStyles}>
+    <View style={containerStyles}>
       <View style={styles.header}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            setActive(false);
-            Keyboard.dismiss();
+            navigation.goBack();
           }}
         >
           <AppText fontWeight={"700"} style={{ fontSize: 12 }}>
@@ -80,16 +67,32 @@ function AddNote({ active, setActive }) {
         </TouchableOpacity>
       </View>
 
-      <Select options={categories} style={styles.select} />
+      <Select
+        options={categories}
+        style={styles.select}
+        defaultValue={noteProp.category}
+      />
 
-      <AppInput style={styles.input} fontWeight="500" defaultValue="Title" />
+      <AppInput
+        style={styles.input}
+        fontWeight="500"
+        defaultValue={noteProp.title}
+        autoFocus={true}
+      />
       <AppInput
         multiline={true}
         style={styles.textarea}
         placeholder={"Write note..."}
         placeholderTextColor="rgba(41, 45, 50, 0.51)"
+        defaultValue={noteProp.text}
       />
-    </Animated.View>
+      <View style={styles.lastEdited}>
+        <AppText>
+          Last Edited:{" "}
+          {noteProp.lastEdited ? noteProp.lastEdited : noteProp.date}
+        </AppText>
+      </View>
+    </View>
   );
 }
 

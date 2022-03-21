@@ -16,6 +16,11 @@ function Note({
 }) {
   const [deleteActive, setDeleteActive] = useState(false);
 
+  // Storing a function as state
+  const [edit, setEdit] = useState(() => () => {
+    navigation.navigate("EditNote", { noteProp });
+  });
+
   const [options, setOptions] = useState([
     {
       name: "Delete",
@@ -25,7 +30,7 @@ function Note({
     },
     {
       name: "Edit",
-      action: null,
+      action: edit,
     },
   ]);
 
@@ -39,7 +44,7 @@ function Note({
           <AppText fontWeight={"700"} style={styles.title}>
             {noteProp.title}
           </AppText>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={edit}>
             <AppText>{noteProp.text}</AppText>
           </TouchableOpacity>
           <View style={styles.info}>
@@ -66,7 +71,7 @@ function Note({
         </View>
       </ScrollView>
       <Menu navigation={navigation} />
-      <EditButton />
+      <EditButton onPress={edit} />
       <DeleteModal active={deleteActive} setActive={setDeleteActive} />
     </View>
   );

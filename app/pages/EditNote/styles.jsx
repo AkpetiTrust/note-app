@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     paddingTop: 10,
   },
+  lastEdited: {
+    marginTop: 40,
+  },
 });
 
 export default styles;

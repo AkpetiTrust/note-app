@@ -4,6 +4,7 @@ import Home from "./app/pages/Home/Home";
 import AllNotes from "./app/pages/AllNotes/AllNotes";
 import About from "./app/pages/About/About";
 import Note from "./app/pages/Note/Note";
+import EditNote from "./app/pages/EditNote/EditNote";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ export default function App() {
           name="Note"
           component={Note}
           options={{ title: "Note" }}
+        />
+        <Stack.Screen
+          name="EditNote"
+          component={EditNote}
+          options={{ title: "EditNote" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
