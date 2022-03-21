@@ -96,6 +96,7 @@ function Select({ options, defaultValue, onChange, style }) {
                       options.filter((item) => item.name === option.name)[0]
                     );
                     setPopUpActive(false);
+                    onChange(option.name);
                   }}
                 >
                   <View

@@ -58,21 +58,26 @@ function Note({
               <AppText style={styles.labelText}>{noteProp.category}</AppText>
             </TouchableOpacity>
             <AppText style={styles.date} fontWeight="700">
-              {noteProp.date}
+              {noteProp.date.short}
             </AppText>
             <Ellipsis options={options} />
           </View>
           <View style={styles.lastEdited}>
             <AppText>
               Last Edited:{" "}
-              {noteProp.lastEdited ? noteProp.lastEdited : noteProp.date}
+              {noteProp.lastEdited ? noteProp.lastEdited : noteProp.date.long}
             </AppText>
           </View>
         </View>
       </ScrollView>
       <Menu navigation={navigation} />
       <EditButton onPress={edit} />
-      <DeleteModal active={deleteActive} setActive={setDeleteActive} />
+      <DeleteModal
+        active={deleteActive}
+        setActive={setDeleteActive}
+        id={noteProp.id}
+        navigation={navigation}
+      />
     </View>
   );
 }

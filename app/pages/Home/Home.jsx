@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { useState, useEffect } from "react";
+import { ScrollView, View, BackHandler } from "react-native";
 import styles from "./styles";
 import AppText from "../../components/AppText/AppText";
 import Button from "../../components/Button/Button";
@@ -10,34 +10,35 @@ import PlusButton from "../../components/PlusButton/PlusButton";
 import AddNote from "../../components/AddNote/AddNote";
 import Menu from "../../components/Menu/Menu";
 import Logo from "../../components/Logo/Logo";
+import { useIsFocused } from "@react-navigation/native";
+import useGlobalState from "../../hooks/useGlobalState";
 
 export default function Home({ navigation }) {
-  const [notes, setNotes] = useState([
-    {
-      title: "GSTs man 😥",
-      text: "Omo these courses are really long, hope I finish them before so so so. I wonder when ASUU will call of strike so I can know what to do. Now I’m going to insert a long piece of text with random words. Peace studies, conflict resolution, Nigerian peoples and cultures. Differential equations, electromagnetism, random course, amines, amides, amino acids, basicity.",
-      category: "Academics",
-      date: "Apr, 26",
-      color: {
-        r: 232,
-        g: 26,
-        b: 26,
-      },
-    },
-    {
-      title: "Omoooo, what’s going on",
-      text: "This is some piece of text. I really can’t think of what to type right now, but pretend I’m saying something related to the title. Also...",
-      category: "Personal",
-      date: "May, 25",
-      color: {
-        r: 31,
-        g: 84,
-        b: 164,
-      },
-    },
-  ]);
+  const [global, setGlobal, refreshGlobal] = useGlobalState();
 
   const [addNotesActive, setAddNotesActive] = useState(false);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    refreshGlobal();
+  }, [isFocused]);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        if (addNotesActive) {
+          setAddNotesActive(false);
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
+
+    return () => backHandler.remove();
+  });
 
   return (
     <View style={styles.container}>
@@ -66,12 +67,8 @@ export default function Home({ navigation }) {
         <View style={styles.recent}>
           <AppText fontWeight="600">Recent</AppText>
           <View style={styles.notes_container}>
-            {notes.map((note) => (
-              <HomeNote
-                noteProp={note}
-                key={note.text}
-                navigation={navigation}
-              />
+            {[...global.notes].splice(0, 4).map((note) => (
+              <HomeNote noteProp={note} key={note.id} navigation={navigation} />
             ))}
           </View>
         </View>
@@ -81,7 +78,12 @@ export default function Home({ navigation }) {
           setAddNotesActive(true);
         }}
       />
-      <AddNote active={addNotesActive} setActive={setAddNotesActive} />
+      <AddNote
+        active={addNotesActive}
+        setActive={setAddNotesActive}
+        global={global}
+        setGlobal={setGlobal}
+      />
       <Menu navigation={navigation} />
     </View>
   );

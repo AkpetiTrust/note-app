@@ -6,9 +6,10 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import AppText from "../../../../components/AppText/AppText";
+import useGlobalState from "../../../../hooks/useGlobalState";
 import { useRef } from "react";
 
-function DeleteModal({ active, setActive }) {
+function DeleteModal({ active, setActive, id, navigation }) {
   const translateY = useRef(new Animated.Value(1000)).current;
   const inner = useRef();
 
@@ -25,6 +26,14 @@ function DeleteModal({ active, setActive }) {
       useNativeDriver: true,
     }).start();
   }
+
+  const [global, setGlobal, refreshGlobal] = useGlobalState();
+
+  const deleteNote = () => {
+    let newNotes = [...global.notes].filter((note) => note.id !== id);
+    setGlobal({ ...global, notes: newNotes });
+    navigation.goBack();
+  };
 
   const handlePress = (e) => {
     const event = e.nativeEvent;
@@ -106,6 +115,7 @@ function DeleteModal({ active, setActive }) {
                 backgroundColor: "#E81A1A",
                 justifyContent: "center",
               }}
+              onPress={deleteNote}
             >
               <AppText
                 fontWeight={"700"}

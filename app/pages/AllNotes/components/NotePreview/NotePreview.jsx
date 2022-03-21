@@ -48,7 +48,7 @@ function NotePreview({ noteProp, navigation }) {
           {noteProp.category}
         </AppText>
         <AppText style={{ fontSize: 12 }} fontWeight="600">
-          {noteProp.date}
+          {noteProp.date.short}
         </AppText>
       </View>
     </TouchableOpacity>

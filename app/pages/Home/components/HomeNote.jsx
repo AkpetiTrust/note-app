@@ -38,7 +38,7 @@ function HomeNote({ noteProp, navigation }) {
           fontWeight="600"
           style={{ color: "rgba(24, 24, 24, 0.51)", fontSize: 13 }}
         >
-          {noteProp.date}
+          {noteProp.date.short}
         </AppText>
       </View>
     </TouchableOpacity>

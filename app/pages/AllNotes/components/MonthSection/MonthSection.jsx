@@ -9,7 +9,7 @@ function MonthSection({ month, navigation }) {
         {month.month}
       </AppText>
       {month.notes.map((note) => (
-        <NotePreview noteProp={note} key={note.text} navigation={navigation} />
+        <NotePreview noteProp={note} key={note.id} navigation={navigation} />
       ))}
     </View>
   );

@@ -89,7 +89,7 @@ function AddNote({
       <View style={styles.lastEdited}>
         <AppText>
           Last Edited:{" "}
-          {noteProp.lastEdited ? noteProp.lastEdited : noteProp.date}
+          {noteProp.lastEdited ? noteProp.lastEdited : noteProp.date.long}
         </AppText>
       </View>
     </View>

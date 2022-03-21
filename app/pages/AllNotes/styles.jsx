@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "background: rgba(24, 24, 24, 0.65)",
     textAlign: "center",
+    marginBottom: 30,
   },
 });
 
