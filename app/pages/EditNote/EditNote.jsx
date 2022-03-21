@@ -1,42 +1,50 @@
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import { View, TouchableOpacity, Keyboard } from "react-native";
 import AppText from "../../components/AppText/AppText";
 import AppInput from "../../components/AppInput/AppInput";
 import Select from "../../components/Select/Select";
 import styles from "./styles";
+import useGlobalState from "../../hooks/useGlobalState";
+import moment from "moment";
+import Note from "../../classes/Note";
 
-function AddNote({
+function EditNote({
   route: {
     params: { noteProp },
   },
   navigation,
 }) {
-  const [categories, setCategories] = useState([
-    {
-      name: "Personal",
-      color: {
-        r: 31,
-        g: 84,
-        b: 164,
-      },
-    },
-    {
-      name: "Academics",
-      color: {
-        r: 232,
-        g: 26,
-        b: 26,
-      },
-    },
-    {
-      name: "Work",
-      color: {
-        r: 248,
-        g: 141,
-        b: 17,
-      },
-    },
-  ]);
+  const [global, setGlobal, refreshGlobal] = useGlobalState();
+
+  const [categories, setCategories] = useState(global.categories);
+
+  const [title, setTitle] = useState(noteProp.title);
+  const [category, setCategory] = useState(noteProp.category);
+  const [text, setText] = useState(noteProp.text);
+
+  const save = () => {
+    if (!text || !title) return;
+    let categoryObject = categories.find((item) => item.name === category);
+    let note = new Note(
+      title,
+      text,
+      categoryObject,
+      noteProp.date,
+      noteProp.id,
+      noteProp.timestamp
+    );
+    note.lastEdited = `${moment().format(
+      "MMM"
+    )} ${new Date().getDate()}, ${new Date().getFullYear()}`;
+    let newGlobal = { ...global };
+    newGlobal.notes.forEach((item, i) => {
+      if (item.id === note.id) {
+        newGlobal.notes[i] = note;
+      }
+    });
+    setGlobal(newGlobal);
+    navigation.pop(2);
+  };
 
   let containerStyles;
 
@@ -61,6 +69,7 @@ function AddNote({
           <AppText
             fontWeight={"700"}
             style={{ color: "#33CA7F", fontSize: 12 }}
+            onPress={save}
           >
             SAVE
           </AppText>
@@ -70,21 +79,31 @@ function AddNote({
       <Select
         options={categories}
         style={styles.select}
-        defaultValue={noteProp.category}
+        defaultValue={category}
+        key={category}
+        onChange={(value) => {
+          setCategory(value);
+        }}
       />
 
       <AppInput
         style={styles.input}
         fontWeight="500"
-        defaultValue={noteProp.title}
         autoFocus={true}
+        value={title}
+        onChange={(e) => {
+          setTitle(e.nativeEvent.text);
+        }}
       />
       <AppInput
         multiline={true}
         style={styles.textarea}
         placeholder={"Write note..."}
         placeholderTextColor="rgba(41, 45, 50, 0.51)"
-        defaultValue={noteProp.text}
+        value={text}
+        onChange={(e) => {
+          setText(e.nativeEvent.text);
+        }}
       />
       <View style={styles.lastEdited}>
         <AppText>
@@ -96,4 +115,4 @@ function AddNote({
   );
 }
 
-export default AddNote;
+export default EditNote;
