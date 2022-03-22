@@ -16,7 +16,7 @@ function NotePreview({ noteProp, navigation }) {
         marginBottom: 20,
       }}
       onPress={() => {
-        navigation.navigate("Note", { noteProp });
+        navigation.push("Note", { noteProp });
       }}
     >
       <View

@@ -70,6 +70,7 @@ function AddNote({ active, setActive, setGlobal, global }) {
       <View style={styles.header}>
         <TouchableOpacity
           activeOpacity={0.5}
+          hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
           onPress={() => {
             setActive(false);
             Keyboard.dismiss();
@@ -79,7 +80,11 @@ function AddNote({ active, setActive, setGlobal, global }) {
             CANCEL
           </AppText>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={save}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={save}
+          hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
+        >
           <AppText
             fontWeight={"700"}
             style={{ color: "#33CA7F", fontSize: 12 }}

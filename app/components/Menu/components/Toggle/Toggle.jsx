@@ -78,7 +78,7 @@ function Toggle({ onPress, active }) {
       onPress={onPress}
       style={{
         position: "absolute",
-        top: StatusBar.currentHeight + 30,
+        top: StatusBar.currentHeight + 20,
         right: 30,
         width,
         zIndex: 10,

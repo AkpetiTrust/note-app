@@ -56,7 +56,8 @@ function EditNote({
     <View style={containerStyles}>
       <View style={styles.header}>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
+          hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
           onPress={() => {
             navigation.goBack();
           }}
@@ -65,11 +66,11 @@ function EditNote({
             CANCEL
           </AppText>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity onPress={save} activeOpacity={0.5}>
           <AppText
             fontWeight={"700"}
             style={{ color: "#33CA7F", fontSize: 12 }}
-            onPress={save}
+            hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
           >
             SAVE
           </AppText>

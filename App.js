@@ -5,6 +5,7 @@ import AllNotes from "./app/pages/AllNotes/AllNotes";
 import About from "./app/pages/About/About";
 import Note from "./app/pages/Note/Note";
 import EditNote from "./app/pages/EditNote/EditNote";
+import Categories from "./app/pages/Categories/Categories";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,11 @@ export default function App() {
           name="EditNote"
           component={EditNote}
           options={{ title: "EditNote" }}
+        />
+        <Stack.Screen
+          name="Categories"
+          component={Categories}
+          options={{ title: "Categories" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

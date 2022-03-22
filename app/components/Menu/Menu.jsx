@@ -26,7 +26,7 @@ function Menu({ navigation }) {
     },
     {
       navigation,
-      to: "Home",
+      to: "Categories",
       text: "CATEGORIES",
       icon: <Categories />,
     },

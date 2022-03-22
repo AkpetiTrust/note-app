@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: "100%",
     height: "200%",
-    zIndex: 5,
+    zIndex: 13,
     backgroundColor: "#fff",
     elevation: Platform.OS === "android" ? 50 : 0,
   },

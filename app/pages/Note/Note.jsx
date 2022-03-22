@@ -18,7 +18,7 @@ function Note({
 
   // Storing a function as state
   const [edit, setEdit] = useState(() => () => {
-    navigation.navigate("EditNote", { noteProp });
+    navigation.push("EditNote", { noteProp });
   });
 
   const [options, setOptions] = useState([
@@ -54,6 +54,11 @@ function Note({
                 backgroundColor: `rgb(${noteProp.color.r}, ${noteProp.color.g}, ${noteProp.color.b})`,
               }}
               activeOpacity={0.6}
+              onPress={() => {
+                navigation.push("AllNotes", {
+                  category: noteProp.category,
+                });
+              }}
             >
               <AppText style={styles.labelText}>{noteProp.category}</AppText>
             </TouchableOpacity>

@@ -7,6 +7,7 @@ function BackButton({ navigation, style }) {
       style={style}
       onPress={navigation.goBack}
       activeOpacity={0.8}
+      hitSlop={{ top: 40, left: 40, right: 40, bottom: 20 }}
     >
       <Icon />
     </TouchableOpacity>

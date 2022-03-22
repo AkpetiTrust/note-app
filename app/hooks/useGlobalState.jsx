@@ -26,20 +26,24 @@ function useGlobalState() {
     ],
     categories: [
       {
-        name: "Personal",
-        color: {
-          r: 31,
-          g: 84,
-          b: 164,
-        },
-      },
-      {
         name: "Academics",
         color: {
           r: 232,
           g: 26,
           b: 26,
         },
+        id: 1,
+        description: "Red because e don red",
+      },
+      {
+        name: "Personal",
+        color: {
+          r: 31,
+          g: 84,
+          b: 164,
+        },
+        id: 2,
+        description: "Don't open this if you're with my phone!",
       },
       {
         name: "Work",
@@ -48,20 +52,26 @@ function useGlobalState() {
           g: 141,
           b: 17,
         },
+        id: 3,
+        description: "Omo",
       },
     ],
-    todos: null,
+    todos: [],
   };
 
   const [global, setGlobal] = useState(JSON.stringify(skeleton));
 
   useEffect(() => {
+    let isMounted = true;
     AsyncStorage.getItem("global").then((value) => {
-      if (value) setGlobal(value);
-      else AsyncStorage.setItem("global", JSON.stringify(skeleton));
+      if (value && isMounted) setGlobal(value);
+      else if (!value && isMounted)
+        AsyncStorage.setItem("global", JSON.stringify(skeleton));
     });
 
-    return () => {};
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const updateGlobal = (value) => {

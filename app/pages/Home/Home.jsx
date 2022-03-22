@@ -55,7 +55,7 @@ export default function Home({ navigation }) {
           fontSize={12}
           color="#fff"
           onPress={() => {
-            navigation.navigate("AllNotes");
+            navigation.push("AllNotes");
           }}
         >
           GO TO NOTES

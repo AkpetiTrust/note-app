@@ -14,7 +14,7 @@ function HomeNote({ noteProp, navigation }) {
         marginBottom: 30,
       }}
       onPress={() => {
-        navigation.navigate("Note", { noteProp });
+        navigation.push("Note", { noteProp });
       }}
     >
       <AppText fontWeight="600">{noteProp.title}</AppText>

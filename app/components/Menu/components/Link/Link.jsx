@@ -5,7 +5,11 @@ function Link({ link: { navigation, to, text, icon }, setMenuActive }) {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate(to);
+        if (to === "AllNotes") {
+          navigation.push(to);
+        } else {
+          navigation.navigate(to);
+        }
         setMenuActive(false);
       }}
       activeOpacity={0.6}

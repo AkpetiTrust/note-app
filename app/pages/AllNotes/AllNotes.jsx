@@ -12,7 +12,7 @@ import parseNotes from "./functions/parseNotes";
 import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
-function AllNotes({ navigation }) {
+function AllNotes({ navigation, route }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
 
   const isFocused = useIsFocused();
@@ -26,6 +26,14 @@ function AllNotes({ navigation }) {
   let notes = parseNotes(global.notes);
 
   const [addNotesActive, setAddNotesActive] = useState(false);
+  const [isCategory, setIsCategory] = useState(!!route?.params?.category);
+  let category = route?.params?.category;
+
+  if (isCategory) {
+    notes = parseNotes(
+      global.notes.filter((note) => note.category === category)
+    );
+  }
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -49,7 +57,7 @@ function AllNotes({ navigation }) {
         <View style={styles.header}>
           <BackButton navigation={navigation} style={styles.back_button} />
           <AppText fontWeight={"700"} style={styles.title}>
-            ALL NOTES
+            {isCategory ? category : "ALL NOTES"}
           </AppText>
         </View>
         <Search style={styles.search} />
@@ -61,10 +69,12 @@ function AllNotes({ navigation }) {
           />
         ))}
 
-        <AppText style={styles.info} fontWeight={"600"}>
-          YOU HAVE {notesInfo.number}{" "}
-          {notesInfo.number === 1 ? "NOTE" : "NOTES"}
-        </AppText>
+        {!isCategory && (
+          <AppText style={styles.info} fontWeight={"600"}>
+            YOU HAVE {notesInfo.number}{" "}
+            {notesInfo.number === 1 ? "NOTE" : "NOTES"}
+          </AppText>
+        )}
       </ScrollView>
       <PlusButton
         onPress={() => {
