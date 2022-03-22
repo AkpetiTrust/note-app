@@ -24,13 +24,15 @@ function HomeNote({ noteProp, navigation }) {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
-          width: "50%",
         }}
       >
         <AppText
           fontWeight="600"
-          style={{ color: "rgba(24, 24, 24, 0.51)", fontSize: 13 }}
+          style={{
+            color: "rgba(24, 24, 24, 0.51)",
+            fontSize: 13,
+            marginRight: 12,
+          }}
         >
           {noteProp.category}
         </AppText>

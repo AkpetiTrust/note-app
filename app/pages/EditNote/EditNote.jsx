@@ -16,7 +16,7 @@ function EditNote({
 }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
 
-  const [categories, setCategories] = useState(global.categories);
+  let categories = global.categories;
 
   const [title, setTitle] = useState(noteProp.title);
   const [category, setCategory] = useState(noteProp.category);

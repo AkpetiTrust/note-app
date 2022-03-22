@@ -1,5 +1,10 @@
-import { TouchableOpacity, View, TouchableWithoutFeedback } from "react-native";
-import { useState, useRef } from "react";
+import {
+  TouchableOpacity,
+  View,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from "react-native";
+import { useState, useRef, useEffect } from "react";
 import AppText from "../AppText/AppText";
 import Icon from "./Icon";
 import { useWindowDimensions } from "react-native";
@@ -8,6 +13,8 @@ function Select({ options, defaultValue, onChange, style }) {
   const [activeOption, setActiveOption] = useState(
     defaultValue
       ? options.filter((option) => option.name === defaultValue)[0]
+        ? options.filter((option) => option.name === defaultValue)[0]
+        : options[0]
       : options[0]
   );
 
@@ -16,6 +23,16 @@ function Select({ options, defaultValue, onChange, style }) {
   const { height, width } = useWindowDimensions();
 
   let color = activeOption.color;
+
+  useEffect(() => {
+    setActiveOption(
+      defaultValue
+        ? options.filter((option) => option.name === defaultValue)[0]
+          ? options.filter((option) => option.name === defaultValue)[0]
+          : options[0]
+        : options[0]
+    );
+  }, [options]);
 
   const inner = useRef(null);
   const handlePress = (e) => {
@@ -63,20 +80,21 @@ function Select({ options, defaultValue, onChange, style }) {
           <View
             style={{
               position: "absolute",
-              top: -50,
+              top: -80,
               left: -20,
               width: width,
-              height: height + 50,
+              height: height + 80,
               backgroundColor: "rgba(0,0,0,0.25)",
               zIndex: 10,
               paddingHorizontal: 30,
             }}
           >
-            <View
+            <ScrollView
               style={{
                 backgroundColor: "#fff",
                 transform: [{ translateY: 200 }],
                 borderRadius: 8,
+                maxHeight: 200,
               }}
               ref={inner}
             >
@@ -118,7 +136,7 @@ function Select({ options, defaultValue, onChange, style }) {
                   </AppText>
                 </TouchableOpacity>
               ))}
-            </View>
+            </ScrollView>
           </View>
         </TouchableWithoutFeedback>
       )}

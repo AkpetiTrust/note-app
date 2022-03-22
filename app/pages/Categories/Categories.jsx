@@ -1,4 +1,10 @@
-import { View, ScrollView, BackHandler, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  BackHandler,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
 import styles from "./styles";
 import AppText from "../../components/AppText/AppText";
 import BackButton from "../../components/BackButton/BackButton";
@@ -8,11 +14,14 @@ import AddNote from "../../components/AddNote/AddNote";
 import useGlobalState from "../../hooks/useGlobalState";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import CategoryCard from "./components/CategoryCard";
+import AddCategory from "./components/AddCategory/AddCategory";
+import Category from "../../classes/Category";
 import { useState, useEffect } from "react";
 
 function Categories({ navigation }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
   const [addNotesActive, setAddNotesActive] = useState(false);
+  const [addCategoryActive, setAddCategoryActive] = useState(false);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -30,6 +39,43 @@ function Categories({ navigation }) {
     return () => backHandler.remove();
   });
 
+  const save = (categoryName, description, color) => {
+    if (!categoryName) {
+      ToastAndroid.showWithGravity(
+        "Specify a category name",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+      return;
+    }
+
+    if (
+      global.categories.filter((category) => category.name === categoryName)
+        .length
+    ) {
+      ToastAndroid.showWithGravity(
+        "That category name has been used before 😔",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+      return;
+    }
+
+    let newCategory = new Category(
+      categoryName,
+      color,
+      global.categories[global.categories.length - 1].id + 1,
+      description
+    );
+
+    let newGlobal = { ...global };
+
+    newGlobal.categories.push(newCategory);
+
+    setGlobal(newGlobal);
+    setAddCategoryActive(false);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.inner}>
@@ -45,6 +91,9 @@ function Categories({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.5}
               hitSlop={{ top: 40, left: 40, right: 40, bottom: 40 }}
+              onPress={() => {
+                setAddCategoryActive(true);
+              }}
             >
               <Plus />
             </TouchableOpacity>
@@ -72,6 +121,11 @@ function Categories({ navigation }) {
         setActive={setAddNotesActive}
         global={global}
         setGlobal={setGlobal}
+      />
+      <AddCategory
+        active={addCategoryActive}
+        setActive={setAddCategoryActive}
+        save={save}
       />
       <Menu navigation={navigation} />
     </View>

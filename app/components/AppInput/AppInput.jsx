@@ -19,7 +19,12 @@ function AppInput(props) {
 
   let fontFamily = props.fontWeight;
 
-  let style = { ...props.style, fontFamily, fontWeight: "normal" };
+  let style = {
+    ...props.style,
+    fontFamily,
+    fontWeight: "normal",
+    includeFontPadding: false,
+  };
 
   let finalProps = { ...props, style };
 

@@ -8,7 +8,7 @@ import moment from "moment";
 import Note from "../../classes/Note";
 
 function AddNote({ active, setActive, setGlobal, global }) {
-  const [categories, setCategories] = useState(global.categories);
+  let categories = global.categories;
 
   const [title, setTitle] = useState("Title");
   const [category, setCategory] = useState("Personal");

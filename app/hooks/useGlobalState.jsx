@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 
 function useGlobalState() {
@@ -61,28 +61,33 @@ function useGlobalState() {
 
   const [global, setGlobal] = useState(JSON.stringify(skeleton));
 
+  const isMounted = useRef(true);
+
   useEffect(() => {
-    let isMounted = true;
     AsyncStorage.getItem("global").then((value) => {
-      if (value && isMounted) setGlobal(value);
-      else if (!value && isMounted)
+      if (value && isMounted.current) setGlobal(value);
+      else if (!value && isMounted.current)
         AsyncStorage.setItem("global", JSON.stringify(skeleton));
     });
 
     return () => {
-      isMounted = false;
+      isMounted.current = false;
     };
   }, []);
 
   const updateGlobal = (value) => {
     AsyncStorage.setItem("global", JSON.stringify(value)).then(() => {
-      setGlobal(JSON.stringify(value));
+      if (isMounted.current) {
+        setGlobal(JSON.stringify(value));
+      }
     });
   };
 
   const refreshGlobal = () => {
     AsyncStorage.getItem("global").then((value) => {
-      setGlobal(value);
+      if (isMounted.current) {
+        setGlobal(value);
+      }
     });
   };
 
