@@ -12,11 +12,14 @@ import Menu from "../../components/Menu/Menu";
 import Logo from "../../components/Logo/Logo";
 import { useIsFocused } from "@react-navigation/native";
 import useGlobalState from "../../hooks/useGlobalState";
+import filterNotes from "../../components/Search/functions/filterNotes";
 
 export default function Home({ navigation }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
 
   const [addNotesActive, setAddNotesActive] = useState(false);
+
+  const [filter, setFilter] = useState("");
 
   const isFocused = useIsFocused();
 
@@ -40,6 +43,10 @@ export default function Home({ navigation }) {
     return () => backHandler.remove();
   });
 
+  const onChange = (text) => {
+    setFilter(text);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollview}>
@@ -60,16 +67,22 @@ export default function Home({ navigation }) {
         >
           GO TO NOTES
         </Button>
-        <Search />
+        <Search onChange={onChange} />
         <View style={styles.illustration_container}>
           <Illustration />
         </View>
         <View style={styles.recent}>
           <AppText fontWeight="600">Recent</AppText>
           <View style={styles.notes_container}>
-            {[...global.notes].splice(0, 4).map((note) => (
-              <HomeNote noteProp={note} key={note.id} navigation={navigation} />
-            ))}
+            {[...filterNotes([...global.notes], filter)]
+              .slice(0, 4)
+              .map((note) => (
+                <HomeNote
+                  noteProp={note}
+                  key={note.id}
+                  navigation={navigation}
+                />
+              ))}
           </View>
         </View>
       </ScrollView>

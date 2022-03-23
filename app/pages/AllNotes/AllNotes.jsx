@@ -14,6 +14,7 @@ import { useIsFocused } from "@react-navigation/native";
 import Ellipsis from "../../components/Ellipsis/Ellipsis";
 import DeleteCategory from "./components/DeleteCategory/DeleteCategory";
 import AddCategory from "../Categories/components/AddCategory/AddCategory";
+import filterNotes from "../../components/Search/functions/filterNotes";
 
 function AllNotes({ navigation, route }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
@@ -26,13 +27,18 @@ function AllNotes({ navigation, route }) {
 
   let notesInfo = { number: global.notes.length };
 
-  let notes = parseNotes(global.notes);
-
   const [addNotesActive, setAddNotesActive] = useState(false);
   const [isCategory, setIsCategory] = useState(!!route?.params?.category);
   const [deleteActive, setDeleteActive] = useState(false);
   const [addCategoryActive, setAddCategoryActive] = useState(false);
   const [category, setCategory] = useState(route?.params?.category);
+  const [filter, setFilter] = useState("");
+
+  let notes = parseNotes(filterNotes(global.notes, filter));
+
+  const onChange = (text) => {
+    setFilter(text);
+  };
 
   const options = [
     {
@@ -51,7 +57,9 @@ function AllNotes({ navigation, route }) {
 
   if (isCategory) {
     notes = parseNotes(
-      global.notes.filter((note) => note.category === category)
+      filterNotes(global.notes, filter).filter(
+        (note) => note.category === category
+      )
     );
   }
 
@@ -90,7 +98,9 @@ function AllNotes({ navigation, route }) {
 
     setCategory(name);
     setGlobal(newGlobal);
-    notes = parseNotes(global.notes.filter((note) => note.category === name));
+    notes = parseNotes(
+      filterNotes(global.notes, filter).filter((note) => note.category === name)
+    );
     setAddCategoryActive(false);
   };
 
@@ -107,7 +117,7 @@ function AllNotes({ navigation, route }) {
           </AppText>
         </View>
         <View>
-          <Search style={styles.search} />
+          <Search style={styles.search} onChange={onChange} />
           {isCategory && <Ellipsis options={options} style={styles.ellipsis} />}
         </View>
         {notes.map((month) => (

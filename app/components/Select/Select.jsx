@@ -3,6 +3,7 @@ import {
   View,
   TouchableWithoutFeedback,
   ScrollView,
+  Keyboard,
 } from "react-native";
 import { useState, useRef, useEffect } from "react";
 import AppText from "../AppText/AppText";
@@ -61,6 +62,7 @@ function Select({ options, defaultValue, onChange, style }) {
           position: "relative",
         }}
         onPress={() => {
+          Keyboard.dismiss();
           setPopUpActive(true);
         }}
       >

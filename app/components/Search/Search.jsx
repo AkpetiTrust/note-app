@@ -8,7 +8,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 
-function Search({ style }) {
+function Search({ style, onChange }) {
   let [fontLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -33,6 +33,7 @@ function Search({ style }) {
             setFontFamily("Poppins_400Regular");
           }
 
+          onChange(text);
           setValue(text);
         }}
         style={{
