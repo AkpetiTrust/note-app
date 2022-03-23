@@ -11,6 +11,9 @@ import styles from "./styles";
 import parseNotes from "./functions/parseNotes";
 import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import Ellipsis from "../../components/Ellipsis/Ellipsis";
+import DeleteCategory from "./components/DeleteCategory/DeleteCategory";
+import AddCategory from "../Categories/components/AddCategory/AddCategory";
 
 function AllNotes({ navigation, route }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
@@ -27,7 +30,24 @@ function AllNotes({ navigation, route }) {
 
   const [addNotesActive, setAddNotesActive] = useState(false);
   const [isCategory, setIsCategory] = useState(!!route?.params?.category);
-  let category = route?.params?.category;
+  const [deleteActive, setDeleteActive] = useState(false);
+  const [addCategoryActive, setAddCategoryActive] = useState(false);
+  const [category, setCategory] = useState(route?.params?.category);
+
+  const options = [
+    {
+      name: "Delete",
+      action: () => {
+        setDeleteActive(true);
+      },
+    },
+    {
+      name: "Edit",
+      action: () => {
+        setAddCategoryActive(true);
+      },
+    },
+  ];
 
   if (isCategory) {
     notes = parseNotes(
@@ -51,16 +71,45 @@ function AllNotes({ navigation, route }) {
     return () => backHandler.remove();
   });
 
+  const save = (name, description, categoryColor) => {
+    let newGlobal = { ...global };
+    newGlobal.notes.forEach((note, i) => {
+      if (note.category === category) {
+        newGlobal.notes[i].category = name;
+        newGlobal.notes[i].color = categoryColor;
+      }
+    });
+
+    newGlobal.categories.forEach((item, i) => {
+      if (item.name === category) {
+        newGlobal.categories[i].name = name;
+        newGlobal.categories[i].description = description;
+        newGlobal.categories[i].color = categoryColor;
+      }
+    });
+
+    setCategory(name);
+    setGlobal(newGlobal);
+    notes = parseNotes(global.notes.filter((note) => note.category === name));
+    setAddCategoryActive(false);
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollview}>
+      <ScrollView
+        style={styles.scrollview}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.header}>
           <BackButton navigation={navigation} style={styles.back_button} />
           <AppText fontWeight={"700"} style={styles.title}>
             {isCategory ? category : "ALL NOTES"}
           </AppText>
         </View>
-        <Search style={styles.search} />
+        <View>
+          <Search style={styles.search} />
+          {isCategory && <Ellipsis options={options} style={styles.ellipsis} />}
+        </View>
         {notes.map((month) => (
           <MonthSection
             month={month}
@@ -88,6 +137,23 @@ function AllNotes({ navigation, route }) {
         setGlobal={setGlobal}
       />
       <Menu navigation={navigation} />
+      {isCategory && (
+        <DeleteCategory
+          active={deleteActive}
+          setActive={setDeleteActive}
+          category={category}
+          navigation={navigation}
+        />
+      )}
+      {isCategory && (
+        <AddCategory
+          active={addCategoryActive}
+          setActive={setAddCategoryActive}
+          category={global.categories.find((item) => item.name === category)}
+          navigation={navigation}
+          save={save}
+        />
+      )}
     </View>
   );
 }

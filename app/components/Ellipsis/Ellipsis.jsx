@@ -3,11 +3,14 @@ import AppText from "../AppText/AppText";
 import styles from "./styles";
 import { useState } from "react";
 
-function Ellipsis({ options }) {
+function Ellipsis({ options, style }) {
   const [active, setActive] = useState(false);
+  if (!style) {
+    style = {};
+  }
 
   return (
-    <View style={styles.ellipsis}>
+    <View style={{ ...styles.ellipsis, ...style }}>
       <TouchableOpacity
         style={styles.dots}
         onPress={() => {
@@ -22,15 +25,17 @@ function Ellipsis({ options }) {
       {active && (
         <View style={styles.options}>
           {options.map((option) => (
-            <TouchableOpacity
-              key={option.name}
-              onPress={() => {
-                option.action();
-                setActive(false);
-              }}
-            >
-              <AppText>{option.name}</AppText>
-            </TouchableOpacity>
+            <View key={option.name}>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 0, right: 50 }}
+                onPress={() => {
+                  option.action();
+                  setActive(false);
+                }}
+              >
+                <AppText>{option.name}</AppText>
+              </TouchableOpacity>
+            </View>
           ))}
         </View>
       )}

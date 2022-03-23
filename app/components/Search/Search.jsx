@@ -28,9 +28,9 @@ function Search({ style }) {
         value={value}
         onChangeText={(text) => {
           if (!text) {
-            setFontFamily("Poppins_600Regular");
+            setFontFamily("Poppins_600SemiBold");
           } else {
-            setFontFamily("Poppins_400SemiBold");
+            setFontFamily("Poppins_400Regular");
           }
 
           setValue(text);

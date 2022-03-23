@@ -1,10 +1,11 @@
 import { View, TouchableOpacity } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Color from "./Color";
 import AppText from "../../../../components/AppText/AppText";
 
 function Colors({
   setCategoryColor,
+  defaultColor,
   hookItems: [
     colors,
     activeColor,
@@ -14,7 +15,26 @@ function Colors({
     refresh,
   ],
 }) {
+  const [renders, setRenders] = useState(0);
+  // Anytime colors change, I'll bring the renders back to 0
   useEffect(() => {
+    setRenders(0);
+  }, [colors]);
+
+  useEffect(() => {
+    let globalRenders = 0;
+    if (defaultColor) {
+      setRenders((prevRenders) => {
+        globalRenders = prevRenders + 1;
+        return globalRenders;
+      });
+
+      if (globalRenders <= 1) {
+        setActiveColor(defaultColor);
+        return;
+      }
+    }
+
     setCategoryColor(activeColor);
   }, [activeColor]);
 

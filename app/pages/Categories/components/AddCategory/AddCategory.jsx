@@ -1,5 +1,5 @@
 import { View, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import CategoryText from "../CategoryText";
 import CategoryInput from "../CategoryInput";
 import Svg, { Path } from "react-native-svg";
@@ -7,10 +7,16 @@ import AppText from "../../../../components/AppText/AppText";
 import Colors from "../Colors/Colors";
 import useColors from "../../hooks/useColors";
 
-function AddCategory({ active, setActive, save }) {
-  const [name, setName] = useState("NEW CATEGORY");
-  const [description, setDescription] = useState("");
-  const [categoryColor, setCategoryColor] = useState({});
+function AddCategory({ active, setActive, save, category }) {
+  const [name, setName] = useState(() =>
+    category ? category.name : "NEW CATEGORY"
+  );
+  const [description, setDescription] = useState(() =>
+    category ? category.description : ""
+  );
+  const [categoryColor, setCategoryColor] = useState(() =>
+    category ? category.color : {}
+  );
   const [
     colors,
     activeColor,
@@ -21,6 +27,12 @@ function AddCategory({ active, setActive, save }) {
   ] = useColors();
 
   const inner = useRef(null);
+
+  useEffect(() => {
+    setName(() => (category ? category.name : "NEW CATEGORY"));
+    setDescription(() => (category ? category.description : ""));
+    setCategoryColor(() => (category ? category.color : {}));
+  }, [category]);
 
   const handlePress = (e) => {
     const event = e.nativeEvent;
@@ -141,6 +153,7 @@ function AddCategory({ active, setActive, save }) {
               <CategoryText>COLOR CODE:</CategoryText>
               <Colors
                 setCategoryColor={setCategoryColor}
+                defaultColor={category?.color}
                 hookItems={[
                   colors,
                   activeColor,

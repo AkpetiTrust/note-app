@@ -16,12 +16,19 @@ import PlusButton from "../../components/PlusButton/PlusButton";
 import CategoryCard from "./components/CategoryCard";
 import AddCategory from "./components/AddCategory/AddCategory";
 import Category from "../../classes/Category";
+import { useIsFocused } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 
 function Categories({ navigation }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
   const [addNotesActive, setAddNotesActive] = useState(false);
   const [addCategoryActive, setAddCategoryActive] = useState(false);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    refreshGlobal();
+  }, [isFocused]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -61,12 +68,14 @@ function Categories({ navigation }) {
       return;
     }
 
-    let newCategory = new Category(
-      categoryName,
-      color,
-      global.categories[global.categories.length - 1].id + 1,
-      description
-    );
+    let id;
+    if (global.categories.length) {
+      id = global.categories[global.categories.length - 1].id + 1;
+    } else {
+      id = 1;
+    }
+
+    let newCategory = new Category(categoryName, color, id, description);
 
     let newGlobal = { ...global };
 

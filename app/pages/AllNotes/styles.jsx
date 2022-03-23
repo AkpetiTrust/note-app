@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
 
   scrollview: {
     paddingHorizontal: 20,
+    flexGrow: 1,
+    flex: 1,
   },
 
   header: {
@@ -25,7 +27,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 4,
   },
+
   search: { width: "80%", marginBottom: 20 },
+
+  ellipsis: {
+    marginBottom: 20,
+  },
+
   info: {
     fontSize: 15,
     color: "background: rgba(24, 24, 24, 0.65)",
