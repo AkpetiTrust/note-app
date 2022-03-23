@@ -84,6 +84,7 @@ function Toggle({ onPress, active }) {
         zIndex: 10,
         elevation: 20,
       }}
+      hitSlop={{ top: 20, bottom: 20, left: 40, right: 20 }}
     >
       <Animated.View
         style={{

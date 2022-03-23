@@ -96,7 +96,7 @@ function Select({ options, defaultValue, onChange, style }) {
                 backgroundColor: "#fff",
                 transform: [{ translateY: 200 }],
                 borderRadius: 8,
-                maxHeight: 200,
+                maxHeight: 170,
               }}
               ref={inner}
             >

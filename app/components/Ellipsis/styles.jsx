@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 100,
     ...boxShadow,
+    zIndex: 10,
   },
 });
 
