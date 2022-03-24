@@ -6,6 +6,7 @@ import About from "./app/pages/About/About";
 import Note from "./app/pages/Note/Note";
 import EditNote from "./app/pages/EditNote/EditNote";
 import Categories from "./app/pages/Categories/Categories";
+import Todo from "./app/pages/Todo/Todo";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,11 @@ export default function App() {
           name="Categories"
           component={Categories}
           options={{ title: "Categories" }}
+        />
+        <Stack.Screen
+          name="Todo"
+          component={Todo}
+          options={{ title: "Todo" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

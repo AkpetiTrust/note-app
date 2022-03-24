@@ -32,7 +32,7 @@ function Menu({ navigation }) {
     },
     {
       navigation,
-      to: "Home",
+      to: "Todo",
       text: "TODO",
       icon: <Todo />,
     },
