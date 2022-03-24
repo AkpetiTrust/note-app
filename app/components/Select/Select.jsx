@@ -91,12 +91,13 @@ function Select({ options, defaultValue, onChange, style }) {
               paddingHorizontal: 30,
             }}
           >
-            <ScrollView
+            <View style={{maxHeight: 170}}>
+              <ScrollView
               style={{
                 backgroundColor: "#fff",
                 transform: [{ translateY: 200 }],
                 borderRadius: 8,
-                maxHeight: 170,
+                flexGrow: 1
               }}
               ref={inner}
             >
@@ -139,6 +140,7 @@ function Select({ options, defaultValue, onChange, style }) {
                 </TouchableOpacity>
               ))}
             </ScrollView>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       )}

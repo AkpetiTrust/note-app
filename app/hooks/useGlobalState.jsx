@@ -85,7 +85,7 @@ function useGlobalState() {
 
   const refreshGlobal = () => {
     AsyncStorage.getItem("global").then((value) => {
-      if (isMounted.current) {
+      if (value && isMounted.current) {
         setGlobal(value);
       }
     });
