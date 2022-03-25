@@ -2,9 +2,14 @@ import { View, TouchableOpacity } from "react-native";
 import AppText from "../../../components/AppText/AppText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 
-function TodoCard({ todo }) {
+function TodoCard({ todo, navigation }) {
   return (
-    <TouchableOpacity activeOpacity={0.7}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => {
+        navigation.navigate("TodoItem", { todo });
+      }}
+    >
       <View
         style={{
           position: "relative",

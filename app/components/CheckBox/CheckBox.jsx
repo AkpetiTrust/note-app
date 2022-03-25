@@ -49,6 +49,7 @@ function CheckBox({ onChange, defaultValue, style }) {
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={() => {
+        onChange(!active);
         setActive((prevValue) => !prevValue);
       }}
       hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}

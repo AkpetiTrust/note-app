@@ -17,7 +17,7 @@ function AppInput(props) {
     800: Poppins_800ExtraBold,
   });
 
-  let fontFamily = props.fontWeight;
+  let fontFamily = props.fontWeight ? props.fontWeight : "400";
 
   let style = {
     ...props.style,

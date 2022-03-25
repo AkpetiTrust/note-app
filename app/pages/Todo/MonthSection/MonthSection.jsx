@@ -2,7 +2,7 @@ import { View } from "react-native";
 import TodoCard from "../TodoCard/TodoCard";
 import AppText from "../../../components/AppText/AppText";
 
-function MonthSection({ month }) {
+function MonthSection({ month, navigation }) {
   return (
     <View
       style={{
@@ -20,7 +20,7 @@ function MonthSection({ month }) {
       </AppText>
       {month.todos.map((todo) => (
         <View key={todo.id}>
-          <TodoCard todo={todo} />
+          <TodoCard todo={todo} navigation={navigation} />
         </View>
       ))}
     </View>

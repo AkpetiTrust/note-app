@@ -6,7 +6,8 @@ import Menu from "../../components/Menu/Menu";
 import Search from "../../components/Search/Search";
 import MonthSection from "./MonthSection/MonthSection";
 import PlusButton from "../../components/PlusButton/PlusButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 function Todo({ navigation }) {
   const [todos, setTodos] = useState([
@@ -16,7 +17,11 @@ function Todo({ navigation }) {
         {
           title: "FINISH GSTs",
           description: "Finish all GSTs very soon, try and finish it by 26th",
-          subtasks: [],
+          subtasks: [
+            { text: "Finish GST121", done: true, id: 1 },
+            { text: "Finish GST122", done: true, id: 2 },
+            { text: "Finish GST123", done: false, id: 3 },
+          ],
           date: "Apr, 26",
           dueDate: "9th June",
           done: false,
@@ -36,6 +41,10 @@ function Todo({ navigation }) {
     },
   ]);
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {}, [isFocused]);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.inner}>
@@ -50,13 +59,21 @@ function Todo({ navigation }) {
           <Search style={styles.search} onChange={() => null} />
           <View>
             {todos.map((month) => (
-              <MonthSection month={month} key={month.months} />
+              <MonthSection
+                navigation={navigation}
+                month={month}
+                key={month.month}
+              />
             ))}
           </View>
         </View>
       </ScrollView>
       <Menu navigation={navigation} />
-      <PlusButton />
+      <PlusButton
+        onPress={() => {
+          navigation.navigate("TodoItem", { todo: null });
+        }}
+      />
     </View>
   );
 }

@@ -66,11 +66,14 @@ function EditNote({
             CANCEL
           </AppText>
         </TouchableOpacity>
-        <TouchableOpacity onPress={save} activeOpacity={0.5}>
+        <TouchableOpacity
+          onPress={save}
+          activeOpacity={0.5}
+          hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
+        >
           <AppText
             fontWeight={"700"}
             style={{ color: "#33CA7F", fontSize: 12 }}
-            hitSlop={{ top: 40, left: 40, right: 40, bottom: 10 }}
           >
             SAVE
           </AppText>
