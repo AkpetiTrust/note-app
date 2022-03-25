@@ -8,42 +8,27 @@ import MonthSection from "./MonthSection/MonthSection";
 import PlusButton from "../../components/PlusButton/PlusButton";
 import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import useGlobalState from "../../hooks/useGlobalState";
+import parseTodos from "./functions/parseTodos";
 
 function Todo({ navigation }) {
-  const [todos, setTodos] = useState([
-    {
-      month: "April, 2022",
-      todos: [
-        {
-          title: "FINISH GSTs",
-          description: "Finish all GSTs very soon, try and finish it by 26th",
-          subtasks: [
-            { text: "Finish GST121", done: true, id: 1 },
-            { text: "Finish GST122", done: true, id: 2 },
-            { text: "Finish GST123", done: false, id: 3 },
-          ],
-          date: "Apr, 26",
-          dueDate: "9th June",
-          done: false,
-          id: 1,
-        },
-        {
-          title: "FINISH PROJECTS",
-          description:
-            "Complete all my coding projects on or before June, 2022, so I can focus on new projects",
-          subtasks: [],
-          date: "Apr, 28",
-          dueDate: "9th June",
-          done: false,
-          id: 2,
-        },
-      ],
-    },
-  ]);
+  const [global, setGlobal, refreshGlobal] = useGlobalState();
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {}, [isFocused]);
+  useEffect(() => {
+    refreshGlobal();
+  }, [isFocused]);
+
+  const onChange = (value, id) => {
+    let newGlobal = { ...global };
+    newGlobal.todos.forEach((item, i) => {
+      if (item.id === id) {
+        newGlobal.todos[i].done = value;
+      }
+    });
+    setGlobal(newGlobal);
+  };
 
   return (
     <View style={styles.container}>
@@ -58,11 +43,12 @@ function Todo({ navigation }) {
           <AppText>A list of your tasks.</AppText>
           <Search style={styles.search} onChange={() => null} />
           <View>
-            {todos.map((month) => (
+            {parseTodos(global.todos).map((month) => (
               <MonthSection
                 navigation={navigation}
                 month={month}
                 key={month.month}
+                onChange={onChange}
               />
             ))}
           </View>

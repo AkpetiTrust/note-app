@@ -6,6 +6,10 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import styles from "./styles";
 import Icon from "./assets/Icon";
 import moment from "moment";
+import useGlobalState from "../../hooks/useGlobalState";
+import Todo from "../../classes/Todo";
+import Ellipsis from "../../components/Ellipsis/Ellipsis";
+import DeleteModal from "./components/DeleteModal/DeleteModal";
 
 function TodoItem({
   route: {
@@ -19,10 +23,12 @@ function TodoItem({
   );
   const [subtasks, setSubtasks] = useState(todo ? todo.subtasks : []);
   const [date, setDate] = useState(
-    todo ? todo.date : moment().format("MMM, DDD")
+    todo ? todo.date : moment().format("MMM, DD")
   );
   const [dueDate, setDueDate] = useState(todo ? todo.dueDate : "Due date");
   const [done, setDone] = useState(todo ? todo.done : false);
+
+  const [deleteModalActive, setDeleteModalActive] = useState(false);
 
   const onSubtaskInputChange = (value, id) => {
     if (!value)
@@ -62,15 +68,59 @@ function TodoItem({
 
   const addSubtask = () => {
     let id = subtasks.length ? subtasks[subtasks.length - 1].id + 1 : 1;
-    let text = "New subtask";
+    let text = "";
     let done = false;
     let newSubtask = { text, done, id };
     setSubtasks((prevSubTasks) => [...prevSubTasks, newSubtask]);
   };
 
+  const [global, setGlobal, refreshGlobal] = useGlobalState();
+
+  const save = () => {
+    let id = todo ? todo.id : global.todos.length ? global.todos[0].id + 1 : 1;
+
+    let timestamp = todo ? todo.timestamp : Date.now();
+
+    let newTodo = new Todo(
+      title,
+      description,
+      subtasks,
+      date,
+      id,
+      timestamp,
+      done,
+      dueDate
+    );
+
+    let newGlobal = { ...global };
+
+    if (!todo) {
+      newGlobal.todos.unshift(newTodo);
+      setGlobal(newGlobal);
+    } else {
+      newGlobal.todos.forEach((item, i) => {
+        if (item.id === id) {
+          newGlobal.todos[i] = newTodo;
+        }
+      });
+      setGlobal(newGlobal);
+    }
+
+    navigation.goBack();
+  };
+
+  const options = [
+    {
+      name: "Delete",
+      action: () => {
+        setDeleteModalActive(true);
+      },
+    },
+  ];
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollview}>
+      <ScrollView style={styles.scrollview} keyboardShouldPersistTaps="handled">
         <View style={styles.header}>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -84,7 +134,12 @@ function TodoItem({
             </AppText>
           </TouchableOpacity>
           <View style={styles.titleView}>
-            <CheckBox defaultValue={done} />
+            <CheckBox
+              defaultValue={done}
+              onChange={(value) => {
+                setDone(value);
+              }}
+            />
             <AppInput
               value={title}
               fontWeight={"700"}
@@ -98,6 +153,7 @@ function TodoItem({
           <TouchableOpacity
             activeOpacity={0.5}
             hitSlop={{ top: 40, left: 40, right: 40, bottom: 30 }}
+            onPress={save}
           >
             <AppText
               fontWeight={"700"}
@@ -116,6 +172,7 @@ function TodoItem({
                 setDescription(text);
               }}
             ></AppInput>
+            {todo && <Ellipsis options={options} />}
           </View>
           <View style={styles.subtasks}>
             <AppText style={styles.sectionTitle} fontWeight={"700"}>
@@ -167,6 +224,14 @@ function TodoItem({
       </ScrollView>
       <View style={styles.circle1}></View>
       <View style={styles.circle2}></View>
+      {todo && (
+        <DeleteModal
+          active={deleteModalActive}
+          setActive={setDeleteModalActive}
+          id={todo.id}
+          navigation={navigation}
+        />
+      )}
     </View>
   );
 }

@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
   },
   top: {
     marginBottom: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   subtasks: {
     marginBottom: 35,

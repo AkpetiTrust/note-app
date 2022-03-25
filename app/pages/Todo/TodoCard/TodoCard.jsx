@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from "react-native";
 import AppText from "../../../components/AppText/AppText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 
-function TodoCard({ todo, navigation }) {
+function TodoCard({ todo, navigation, onChange }) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -29,6 +29,10 @@ function TodoCard({ todo, navigation }) {
             zIndex: 3,
           }}
           defaultValue={todo.done}
+          key={todo.done}
+          onChange={(value) => {
+            onChange(value, todo.id);
+          }}
         />
         <AppText fontWeight={"700"} style={{ marginBottom: 8, fontSize: 15 }}>
           {todo.title}
