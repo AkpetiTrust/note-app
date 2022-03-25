@@ -1,5 +1,11 @@
 import { useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity, Animated, Keyboard } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Animated,
+  Keyboard,
+  ToastAndroid,
+} from "react-native";
 import AppText from "../AppText/AppText";
 import AppInput from "../AppInput/AppInput";
 import Select from "../Select/Select";
@@ -21,7 +27,13 @@ function AddNote({ active, setActive, setGlobal, global }) {
   };
 
   const save = () => {
-    if (!text || !title) return;
+    if (!text || !title) {
+      ToastAndroid.show(
+        "Title or note can't be left empty",
+        ToastAndroid.SHORT
+      );
+      return;
+    }
     let categoryObject = categories.find((item) => item.name === category);
     let note = new Note(title, text, categoryObject, null, null, Date.now());
     let id = global.notes[0]?.id + 1;

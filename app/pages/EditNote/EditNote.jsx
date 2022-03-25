@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Keyboard } from "react-native";
+import { View, TouchableOpacity, Keyboard, ToastAndroid } from "react-native";
 import AppText from "../../components/AppText/AppText";
 import AppInput from "../../components/AppInput/AppInput";
 import Select from "../../components/Select/Select";
@@ -23,7 +23,13 @@ function EditNote({
   const [text, setText] = useState(noteProp.text);
 
   const save = () => {
-    if (!text || !title) return;
+    if (!text || !title) {
+      ToastAndroid.show(
+        "Title or note can't be left empty",
+        ToastAndroid.SHORT
+      );
+      return;
+    }
     let categoryObject = categories.find((item) => item.name === category);
     let note = new Note(
       title,

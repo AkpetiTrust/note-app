@@ -10,9 +10,11 @@ import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import useGlobalState from "../../hooks/useGlobalState";
 import parseTodos from "./functions/parseTodos";
+import filterTodos from "../../components/Search/functions/filterTodos";
 
 function Todo({ navigation }) {
   const [global, setGlobal, refreshGlobal] = useGlobalState();
+  const [filter, setFilter] = useState("");
 
   const isFocused = useIsFocused();
 
@@ -30,6 +32,10 @@ function Todo({ navigation }) {
     setGlobal(newGlobal);
   };
 
+  const onSearchChange = (value) => {
+    setFilter(value);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.inner}>
@@ -41,9 +47,9 @@ function Todo({ navigation }) {
         </View>
         <View style={styles.main}>
           <AppText>A list of your tasks.</AppText>
-          <Search style={styles.search} onChange={() => null} />
+          <Search style={styles.search} onChange={onSearchChange} />
           <View>
-            {parseTodos(global.todos).map((month) => (
+            {parseTodos(filterTodos(global.todos, filter)).map((month) => (
               <MonthSection
                 navigation={navigation}
                 month={month}
