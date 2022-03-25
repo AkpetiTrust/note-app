@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ScrollView } from "react-native";
+import { View, TouchableOpacity, ScrollView, BackHandler } from "react-native";
 import AppText from "../../components/AppText/AppText";
 import AppInput from "../../components/AppInput/AppInput";
 import { useState, useEffect } from "react";
@@ -117,6 +117,18 @@ function TodoItem({
       },
     },
   ];
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        save();
+        return true;
+      }
+    );
+
+    return () => backHandler.remove();
+  });
 
   return (
     <View style={styles.container}>
